@@ -1,0 +1,787 @@
+# Project Memory for Antigravity
+
+> Purpose: This file is a project memory / brief for an AI coding agent such as Antigravity.
+> Use it to understand the current project direction before making changes.
+
+---
+
+## 1. Project Identity
+
+This is an existing Arabic RTL gallery website for customized educational products.
+
+The public website showcases:
+
+- Customized notebooks
+- Educational books
+- Preschool activity books
+- Custom covers
+- Planners / daily notebooks
+- Children learning materials
+
+The project must NOT be rewritten from scratch.
+
+The current public UI and UX are important and should be preserved.
+
+---
+
+## 2. Main User Goal
+
+The final goal is to create a simple production-ready system where a non-technical admin user can manage the gallery easily from a phone.
+
+The main admin user should be able to:
+
+1. Login to an admin dashboard.
+2. Add product categories/types.
+3. Upload images from phone gallery/storage.
+4. Choose which category each image belongs to.
+5. Mark images as featured.
+6. Edit images/items.
+7. Delete images/items.
+8. Manage WhatsApp/contact settings.
+9. See changes reflected on the public gallery.
+
+The admin dashboard must be extremely simple and mobile-first.
+
+---
+
+## 3. Current Public Frontend
+
+The public frontend already exists and must be preserved.
+
+It includes:
+
+- Arabic RTL layout
+- Hero section
+- Featured carousel
+- Category filters
+- Masonry gallery
+- Lightbox image viewer
+- Sticky WhatsApp CTA button
+- Framer Motion animations
+- Tailwind styling
+- Local static gallery image assets
+
+Important current source files include:
+
+- `src/routes/index.tsx`
+- `src/routes/__root.tsx`
+- `src/router.tsx`
+- `src/routeTree.gen.ts`
+- `src/styles.css`
+- `src/components/gallery/galleryData.ts`
+- `src/components/gallery/FeaturedCarousel.tsx`
+- `src/components/gallery/MasonryGrid.tsx`
+- `src/components/gallery/Lightbox.tsx`
+- `src/components/ui/*`
+- `src/assets/gallery-*.jpg`
+- `src/lib/utils.ts`
+- `src/hooks/use-mobile.tsx`
+
+The public page originally used static data from `galleryData.ts`.
+
+---
+
+## 4. Important UI Rules
+
+Do not break the existing public design.
+
+Preserve:
+
+- Arabic language
+- RTL layout
+- Existing gallery look and feel
+- Existing animations
+- Existing lightbox behavior
+- Existing masonry layout
+- Existing featured carousel behavior
+- Existing WhatsApp CTA behavior
+- Mobile responsiveness
+
+Any backend connection must be added carefully without destroying the current UI.
+
+---
+
+## 5. Admin Dashboard Vision
+
+The admin dashboard should be:
+
+- Arabic only
+- RTL
+- Mobile-first
+- Designed mainly for smartphone use
+- Simple enough for a non-technical person
+- Based on cards and large touch-friendly buttons
+- Avoiding complex tables
+- Easy to use with one hand when possible
+
+Expected admin sections:
+
+### Login
+
+Fields:
+
+- Email
+- Password
+- Login button
+
+### First-Time Setup
+
+If there are no categories yet, show a setup panel:
+
+- Title: `لنبدأ بإضافة أنواع المنتجات`
+- Description: `أضيفي أنواع الدفاتر والكراريس التي تريدين عرضها في المعرض.`
+- Input: `اسم النوع`
+- Button: `إضافة النوع`
+- Show added types as chips/cards
+- Button: `حفظ الأنواع والانتقال إلى المعرض`
+
+After saving categories, the setup section should disappear/collapse and the gallery management area should appear.
+
+### Main Admin Page
+
+Sections:
+
+1. Add image
+2. Current gallery
+3. Manage categories
+4. Site settings
+
+### Add Image Flow
+
+The flow must be very short:
+
+1. Choose image from phone/gallery
+2. Preview image
+3. Choose category/type
+4. Optionally enter title
+5. Toggle featured
+6. Save
+
+The user must never manually type image URLs.
+
+### Current Gallery
+
+Each gallery item should appear as a card:
+
+- Image
+- Title
+- Category
+- Featured badge if featured
+- Edit button
+- Delete button
+
+### Edit Image
+
+A mobile-friendly modal or bottom sheet:
+
+- Current image preview
+- Replace image button
+- Title input
+- Category select
+- Featured toggle
+- Save changes
+- Cancel
+
+### Delete Image
+
+Show confirmation:
+
+`هل أنتِ متأكدة من حذف هذه الصورة؟`
+
+Buttons:
+
+- `حذف`
+- `إلغاء`
+
+### Manage Categories
+
+Collapsed by default under:
+
+`إدارة الأنواع`
+
+Features:
+
+- Add category
+- Edit category
+- Delete category
+
+If a category has images, deletion should be blocked or require safe handling.
+
+Recommended message:
+
+`لا يمكن حذف هذا النوع لأنه يحتوي على صور. احذفي الصور أو انقليها أولًا.`
+
+### Site Settings
+
+Collapsed by default under:
+
+`إعدادات الموقع`
+
+Fields:
+
+- WhatsApp number
+- Default WhatsApp message
+- Hero title
+- Hero subtitle
+- Meta title
+- Meta description
+
+---
+
+## 6. Previous Backend Direction
+
+Earlier, a Cloudflare-based backend direction was explored:
+
+- Cloudflare Workers
+- D1 database
+- R2 image storage
+- Wrangler deployment
+
+Some code may already exist for this direction, including:
+
+- `wrangler.jsonc`
+- Cloudflare binding types
+- D1-style migrations
+- API routes under `src/routes/api/*`
+- R2 upload route logic
+
+However, this is no longer the preferred final deployment direction.
+
+Do not continue with Cloudflare D1/R2 unless explicitly requested.
+
+---
+
+## 7. New Final Deployment Architecture
+
+The selected architecture is:
+
+```txt
+Vercel = Frontend / public gallery / admin UI
+Railway = Backend API + PostgreSQL database
+Cloudinary = Image storage
+```
+
+This replaces the Cloudflare D1/R2 plan.
+
+The final system should work like this:
+
+```txt
+Phone gallery
+↓
+Admin selects image
+↓
+Frontend sends image to Railway backend
+↓
+Railway backend uploads image to Cloudinary
+↓
+Cloudinary returns public image URL
+↓
+Railway backend saves image metadata in PostgreSQL
+↓
+Public gallery fetches data from Railway API
+↓
+Visitors see the uploaded image
+```
+
+The non-technical admin user should only see:
+
+```txt
+اختاري صورة
+اختاري النوع
+اضغطي حفظ
+```
+
+The user should not need to understand Cloudinary, Railway, PostgreSQL, or storage URLs.
+
+---
+
+## 8. Recommended Backend Stack
+
+Create a separate backend service inside:
+
+```txt
+backend/
+```
+
+Recommended backend stack:
+
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- Cloudinary SDK
+- JWT authentication
+- bcrypt or secure password hashing
+- multer or equivalent multipart parser for image uploads
+- CORS configured for Vercel frontend origin
+
+Expected backend folder shape:
+
+```txt
+backend/
+  package.json
+  .env.example
+  README.md
+  src/
+    server.ts
+    db.ts
+    auth.ts
+    middleware/
+      requireAdmin.ts
+    routes/
+      auth.ts
+      categories.ts
+      gallery.ts
+      settings.ts
+      upload.ts
+    utils/
+      responses.ts
+      validation.ts
+  migrations/
+    001_initial_schema.sql
+    002_seed_settings.sql
+    003_seed_admin.sql
+```
+
+---
+
+## 9. Backend Environment Variables
+
+For Railway backend:
+
+```env
+NODE_ENV=production
+PORT=3000
+
+DATABASE_URL=postgresql://...
+
+JWT_SECRET=replace_with_long_random_secret
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+CORS_ORIGIN=https://your-frontend.vercel.app
+```
+
+Do not expose `CLOUDINARY_API_SECRET` to the frontend.
+
+---
+
+## 10. Frontend Environment Variables
+
+For Vercel frontend:
+
+```env
+VITE_API_BASE_URL=https://your-backend.up.railway.app
+```
+
+Alternative approach:
+
+Use `vercel.json` rewrites so frontend can call `/api/...` and Vercel proxies to Railway.
+
+Example:
+
+```json
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://your-backend.up.railway.app/api/:path*"
+    }
+  ]
+}
+```
+
+---
+
+## 11. Database Entities
+
+### Category
+
+Represents product types.
+
+Fields:
+
+- id
+- slug
+- label_ar
+- sort_order
+- is_active
+- created_at
+- updated_at
+
+### GalleryItem
+
+Represents a gallery image/product item.
+
+Fields:
+
+- id
+- title
+- description optional
+- category_id
+- image_url
+- thumbnail_url optional
+- cloudinary_public_id optional
+- alt_text_ar optional
+- is_featured
+- sort_order
+- status: draft / published
+- published_at
+- created_at
+- updated_at
+
+### SiteSettings
+
+Represents editable site content.
+
+Fields:
+
+- id
+- whatsapp_number
+- whatsapp_message
+- hero_title
+- hero_subtitle
+- meta_title
+- meta_description
+- created_at
+- updated_at
+
+### AdminUser
+
+Represents admin login account.
+
+Fields:
+
+- id
+- email
+- password_hash
+- role
+- is_active
+- last_login_at
+- created_at
+- updated_at
+
+### MediaAsset
+
+Tracks uploaded media.
+
+Fields:
+
+- id
+- cloudinary_public_id
+- secure_url
+- format
+- width
+- height
+- bytes
+- created_at
+- updated_at
+
+### AuditLog optional
+
+Tracks admin actions.
+
+Fields:
+
+- id
+- actor_admin_id
+- action
+- entity_type
+- entity_id
+- metadata_json
+- created_at
+
+---
+
+## 12. Required API Endpoints
+
+### Public
+
+```txt
+GET /api/categories
+GET /api/gallery
+GET /api/gallery/featured
+GET /api/settings
+```
+
+### Admin Auth
+
+```txt
+POST /api/admin/login
+POST /api/admin/logout optional
+GET /api/admin/me optional
+```
+
+### Admin Categories
+
+```txt
+GET /api/admin/categories
+POST /api/admin/categories
+PATCH /api/admin/categories/:id
+DELETE /api/admin/categories/:id
+```
+
+### Admin Gallery
+
+```txt
+GET /api/admin/gallery
+POST /api/admin/gallery
+PATCH /api/admin/gallery/:id
+DELETE /api/admin/gallery/:id
+```
+
+### Admin Upload
+
+```txt
+POST /api/admin/upload
+```
+
+This endpoint should accept `multipart/form-data`.
+
+Expected response:
+
+```json
+{
+  "data": {
+    "url": "https://res.cloudinary.com/...",
+    "publicId": "...",
+    "width": 1000,
+    "height": 1000,
+    "format": "jpg",
+    "bytes": 123456
+  }
+}
+```
+
+### Admin Settings
+
+```txt
+GET /api/admin/settings
+PATCH /api/admin/settings
+```
+
+---
+
+## 13. API Response Format
+
+Use consistent response shapes.
+
+Success object:
+
+```json
+{
+  "data": {}
+}
+```
+
+Success list:
+
+```json
+{
+  "items": []
+}
+```
+
+Error:
+
+```json
+{
+  "error": {
+    "message": "Human readable message",
+    "code": "ERROR_CODE"
+  }
+}
+```
+
+---
+
+## 14. Frontend Integration Notes
+
+The frontend should call the backend using a configurable API base URL.
+
+Recommended helper:
+
+```ts
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+```
+
+Then API requests can use:
+
+```ts
+fetch(`${API_BASE_URL}/api/gallery`)
+```
+
+If using Vercel rewrites, `API_BASE_URL` can be empty and requests can use `/api/...`.
+
+Files likely to change:
+
+- `src/lib/api/client.ts`
+- `src/lib/admin/api.ts`
+- `src/routes/index.tsx`
+- `src/routes/admin/login.tsx`
+- `src/routes/admin/index.tsx`
+
+The public gallery should eventually fetch from:
+
+```txt
+GET /api/categories
+GET /api/gallery
+GET /api/gallery/featured
+GET /api/settings
+```
+
+The admin dashboard should use:
+
+```txt
+POST /api/admin/login
+POST /api/admin/upload
+POST /api/admin/gallery
+PATCH /api/admin/gallery/:id
+DELETE /api/admin/gallery/:id
+POST /api/admin/categories
+PATCH /api/admin/categories/:id
+DELETE /api/admin/categories/:id
+PATCH /api/admin/settings
+```
+
+---
+
+## 15. Important Current Status
+
+The project has reached a state where:
+
+- `npm run dev` has worked locally.
+- `npm run build` has worked.
+- TypeScript errors were fixed.
+- Admin login was successfully entered locally.
+- Previous D1/R2 path is now being abandoned in favor of Railway + Cloudinary.
+- The next major task is to create/migrate to a Railway backend and connect the existing frontend/admin UI to it.
+
+---
+
+## 16. Things Not To Do
+
+Do not:
+
+- Rewrite the public gallery from scratch.
+- Replace the Arabic RTL UI.
+- Remove the mobile-first admin dashboard.
+- Continue implementing Cloudflare R2 if the user has chosen Cloudinary.
+- Expose Cloudinary secrets in frontend.
+- Store images only in the phone.
+- Ask the admin user to paste image URLs.
+- Edit `src/routeTree.gen.ts` manually.
+- Break existing static fallback until dynamic API works.
+
+---
+
+## 17. Image Upload Explanation
+
+The admin selects images from phone storage/gallery.
+
+However, the image cannot remain only on the phone, because visitors cannot access the admin's phone files.
+
+Therefore, the upload flow must be:
+
+```txt
+Phone file picker
+↓
+Frontend receives File object
+↓
+Frontend sends File to backend as multipart/form-data
+↓
+Backend uploads file to Cloudinary
+↓
+Cloudinary returns public URL
+↓
+Backend stores URL in PostgreSQL
+↓
+Frontend/public gallery displays image URL
+```
+
+This is the correct meaning of “upload from phone storage.”
+
+---
+
+## 18. Suggested Implementation Phases
+
+### Phase 1
+
+Create `backend/` Express + TypeScript service.
+
+### Phase 2
+
+Add PostgreSQL migrations and DB helpers.
+
+### Phase 3
+
+Add admin auth:
+
+- Password hashing
+- Login endpoint
+- JWT
+- Protected routes
+
+### Phase 4
+
+Add CRUD:
+
+- categories
+- gallery_items
+- settings
+
+### Phase 5
+
+Add Cloudinary upload:
+
+- multipart/form-data
+- file validation
+- upload to Cloudinary
+- save media metadata
+
+### Phase 6
+
+Update frontend API clients to use Railway backend.
+
+### Phase 7
+
+Connect public gallery to dynamic API.
+
+### Phase 8
+
+Deploy:
+
+- Backend to Railway
+- Frontend to Vercel
+- Images to Cloudinary
+
+### Phase 9
+
+Test from phone:
+
+- Login
+- Add category
+- Upload image from phone
+- Edit image
+- Delete image
+- Verify public gallery updates
+
+---
+
+## 19. Final Instruction for Antigravity
+
+Before coding:
+
+1. Inspect the actual project files.
+2. Confirm current structure.
+3. Identify what already exists.
+4. Do not assume all previous Cloudflare code should remain active.
+5. Preserve existing frontend/admin UI.
+6. Implement changes in small, safe steps.
+7. Show all changed files.
+8. Explain how to run locally.
+9. Explain how to deploy to Railway/Vercel.
+10. Do not remove working features without explicit approval.
