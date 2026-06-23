@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://your-backend.up.railway.app/api/:path*"
+      "destination": "https://nounou-lfew.onrender.com/api/:path*"
     }
   ]
 }
