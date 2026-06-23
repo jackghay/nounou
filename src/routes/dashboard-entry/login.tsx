@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { isLoggedIn, login } from "@/lib/admin/api";
 
-export const Route = createFileRoute("/admin/login")({
+export const Route = createFileRoute("/dashboard-entry/login")({
   component: LoginPage,
 });
 
@@ -23,7 +23,7 @@ function LoginPage() {
     setAuthed(isLoggedIn());
   }, []);
 
-  if (authed) return <Navigate to="/admin" />;
+  if (authed) return <Navigate to="/dashboard-entry" />;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ function LoginPage() {
     setLoading(false);
     if (ok) {
       toast.success("تم تسجيل الدخول");
-      navigate({ to: "/admin" });
+      navigate({ to: "/dashboard-entry" });
     } else {
       toast.error("بيانات الدخول غير صحيحة");
     }

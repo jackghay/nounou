@@ -37,6 +37,13 @@ type SettingsDto = {
   heroSubtitle: string | null;
   metaTitle: string | null;
   metaDescription: string | null;
+  theme: string | null;
+  fontFamily: string | null;
+  cardStyle: string | null;
+  bgSparkles: string | null;
+  primaryColor: string | null;
+  secondaryColor: string | null;
+  backgroundColor: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -76,6 +83,13 @@ function toSettings(dto: SettingsDto): Settings {
     heroSubtitle: dto.heroSubtitle ?? "",
     metaTitle: dto.metaTitle ?? "",
     metaDescription: dto.metaDescription ?? "",
+    theme: dto.theme ?? "royal_gold",
+    fontFamily: dto.fontFamily ?? "Tajawal",
+    cardStyle: dto.cardStyle ?? "medium",
+    bgSparkles: dto.bgSparkles ?? "none",
+    primaryColor: dto.primaryColor ?? "",
+    secondaryColor: dto.secondaryColor ?? "",
+    backgroundColor: dto.backgroundColor ?? "",
   };
 }
 
@@ -121,8 +135,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers.set("Content-Type", "application/json");
   }
   if (token) headers.set("Authorization", `Bearer ${token}`);
-
-  const response = await fetch(path, {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: "include",
     ...init,
     headers,

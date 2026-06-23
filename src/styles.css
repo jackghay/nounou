@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@400;600;700;800&family=El+Messiri:wght@400;500;600;700&family=Lemonada:wght@300..700&family=Tajawal:wght@300;400;500;700&display=swap');
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -150,11 +151,204 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: 'Tajawal', 'Cairo', system-ui, sans-serif;
+    font-family: var(--font-family-override, 'Tajawal', 'Cairo', system-ui, sans-serif);
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap');
+@theme inline {
+  --color-gold: var(--gold);
+  --color-pink: var(--pink);
+  --color-sky: var(--sky);
+  --color-royal: var(--royal);
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(0.5deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: float-slow 6s ease-in-out infinite; }
+.animate-fade-up { animation: fade-up 0.7s ease-out both; }
+
+.text-gradient-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-shimmer {
+  background: linear-gradient(90deg, var(--royal) 0%, var(--gold) 50%, var(--royal) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+.glass {
+  background: oklch(1 0 0 / 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ===== Admin dashboard styles (Phase 3 integration) ===== */
+.font-arabic {
+  font-family: "Cairo", system-ui, sans-serif;
+}
+
+[dir="rtl"] .font-arabic {
+  font-family: "Cairo", system-ui, sans-serif;
+}
+
+:root {
+  --admin-bg: oklch(0.985 0.012 25);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.32 0.05 15);
+  --admin-border: oklch(0.93 0.025 20);
+  --admin-accent: oklch(0.7 0.16 10);
+  --admin-accent-2: oklch(0.78 0.13 35);
+  --admin-accent-soft: oklch(0.96 0.03 15);
+  --admin-gold: oklch(0.82 0.12 80);
+  --admin-gradient: linear-gradient(135deg, oklch(0.78 0.14 15), oklch(0.82 0.12 50));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.97 0.025 15), oklch(0.97 0.025 60));
+  --admin-shadow-soft: 0 10px 30px -12px oklch(0.7 0.16 10 / 0.25);
+  --admin-shadow-glow: 0 0 0 4px oklch(0.7 0.16 10 / 0.12);
+}
+
+@keyframes admin-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes admin-pop {
+  0%   { opacity: 0; transform: scale(0.92); }
+  70%  { opacity: 1; transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+@keyframes admin-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+@keyframes admin-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes admin-sparkle {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0); }
+  50%      { opacity: 0.6; transform: scale(1.15) rotate(15deg); }
+}
+
+.admin-fade-up { animation: admin-fade-up 0.5s ease-out both; }
+.admin-pop     { animation: admin-pop 0.35s cubic-bezier(.2,.9,.3,1.4) both; }
+.admin-float   { animation: admin-float 3s ease-in-out infinite; }
+.admin-sparkle { animation: admin-sparkle 2.4s ease-in-out infinite; }
+
+.admin-bg-pattern {
+  background:
+    radial-gradient(circle at 12% 8%, oklch(0.92 0.06 15 / 0.55), transparent 38%),
+    radial-gradient(circle at 88% 92%, oklch(0.92 0.06 60 / 0.5), transparent 42%),
+    radial-gradient(circle at 50% 50%, oklch(0.96 0.03 30 / 0.35), transparent 60%),
+    var(--admin-bg);
+}
+
+.admin-card-hover {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.admin-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--admin-shadow-soft);
+  border-color: oklch(0.85 0.08 15);
+}
+
+.btn-girly {
+  position: relative;
+  background: var(--admin-gradient);
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  box-shadow: var(--admin-shadow-soft);
+  transition: transform .2s ease, box-shadow .25s ease, filter .2s ease;
+  overflow: hidden;
+}
+.btn-girly:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.05);
+  box-shadow: 0 14px 36px -10px oklch(0.7 0.16 10 / 0.45);
+}
+.btn-girly:active { transform: translateY(0) scale(0.98); }
+.btn-girly::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+.btn-girly:hover:not(:disabled)::after {
+  opacity: 1;
+  animation: admin-shimmer 1.4s ease-in-out;
+}
+
+.btn-soft {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+  border: 1px solid oklch(0.9 0.05 15);
+  border-radius: 9999px;
+  transition: transform .2s ease, background .2s ease;
+}
+.btn-soft:hover { background: oklch(0.93 0.05 15); transform: translateY(-1px); }
+
+.chip-girly {
+  background: var(--admin-gradient-soft);
+  color: var(--admin-accent);
+  border: 1px solid oklch(0.9 0.05 15);
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: transform .2s ease;
+}
+.chip-girly:hover { transform: translateY(-2px); }
+
+.input-girly,
+.input-girly:focus-visible {
+  border-radius: 1rem !important;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.input-girly:focus, .input-girly:focus-visible {
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-family-override, 'Tajawal', 'Cairo', system-ui, sans-serif);
+  }
+}
 
 @theme inline {
   --color-gold: var(--gold);
@@ -335,4 +529,246 @@
   border-color: var(--admin-accent) !important;
   box-shadow: var(--admin-shadow-glow) !important;
   outline: none !important;
+}
+
+/* ==================== THEME STYLES OVERRIDES ==================== */
+
+/* 0. Royal Gold (الذهبي الملكي ✨) */
+html[data-theme="royal_gold"] {
+  --background: oklch(0.99 0.008 340);
+  --foreground: oklch(0.28 0.08 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.28 0.08 270);
+  --border: oklch(0.92 0.03 340);
+  --primary: oklch(0.42 0.18 270);
+  --primary-foreground: oklch(0.99 0.005 340);
+  --secondary: oklch(0.92 0.05 350);
+  --secondary-foreground: oklch(0.32 0.1 270);
+  --gold: oklch(0.78 0.12 85);
+  --pink: oklch(0.85 0.09 350);
+  --sky: oklch(0.88 0.06 230);
+  --royal: oklch(0.42 0.18 270);
+  --gradient-hero: linear-gradient(135deg, oklch(0.97 0.04 350) 0%, oklch(0.95 0.05 230) 50%, oklch(0.97 0.06 85 / 0.6) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.42 0.18 270), oklch(0.55 0.16 290));
+  --shadow-soft: 0 10px 40px -10px oklch(0.42 0.18 270 / 0.18);
+  --shadow-card: 0 20px 50px -20px oklch(0.42 0.18 270 / 0.25), 0 4px 12px -4px oklch(0.85 0.09 350 / 0.3);
+  --shadow-float: 0 30px 60px -25px oklch(0.42 0.18 270 / 0.35);
+  
+  --admin-bg: oklch(0.99 0.008 340);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.28 0.08 270);
+  --admin-border: oklch(0.92 0.03 340);
+  --admin-accent: oklch(0.42 0.18 270);
+  --admin-gradient: linear-gradient(135deg, oklch(0.42 0.18 270), oklch(0.55 0.16 290));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.97 0.04 350), oklch(0.97 0.06 85 / 0.3));
+}
+
+/* 1. Cute Pastel (باستيل الفراولة 🌸) */
+html[data-theme="cute_pastel"] {
+  --background: oklch(0.99 0.015 350);
+  --foreground: oklch(0.3 0.1 350);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.3 0.1 350);
+  --border: oklch(0.95 0.03 350);
+  --primary: oklch(0.75 0.16 350);
+  --primary-foreground: oklch(0.99 0.005 350);
+  --secondary: oklch(0.96 0.02 350);
+  --secondary-foreground: oklch(0.4 0.1 350);
+  --pink: oklch(0.85 0.09 350);
+  --sky: oklch(0.88 0.06 230);
+  --gold: oklch(0.92 0.06 85);
+  --royal: oklch(0.75 0.16 350);
+  --gradient-hero: linear-gradient(135deg, oklch(0.99 0.015 350) 0%, oklch(0.97 0.03 230) 50%, oklch(0.99 0.02 85 / 0.6) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.75 0.16 350), oklch(0.85 0.1 350));
+  --shadow-soft: 0 10px 40px -10px oklch(0.75 0.16 350 / 0.18);
+  --shadow-card: 0 20px 50px -20px oklch(0.75 0.16 350 / 0.25), 0 4px 12px -4px oklch(0.85 0.09 350 / 0.3);
+  --shadow-float: 0 30px 60px -25px oklch(0.75 0.16 350 / 0.35);
+  
+  --admin-bg: oklch(0.99 0.012 350);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.35 0.08 350);
+  --admin-border: oklch(0.96 0.03 350);
+  --admin-accent: oklch(0.75 0.16 350);
+  --admin-gradient: linear-gradient(135deg, oklch(0.75 0.16 350), oklch(0.85 0.1 350));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.98 0.015 350), oklch(0.98 0.02 85 / 0.3));
+}
+
+/* 2. Terracotta Craft (خزف وفخار 🏺) */
+html[data-theme="terracotta_craft"] {
+  --background: oklch(0.98 0.015 45);
+  --foreground: oklch(0.3 0.08 45);
+  --card: oklch(0.99 0.005 45);
+  --card-foreground: oklch(0.3 0.08 45);
+  --border: oklch(0.91 0.03 45);
+  --primary: oklch(0.55 0.14 45);
+  --primary-foreground: oklch(0.99 0.005 45);
+  --secondary: oklch(0.94 0.04 45);
+  --secondary-foreground: oklch(0.4 0.08 45);
+  --pink: oklch(0.88 0.06 45);
+  --sky: oklch(0.88 0.06 200);
+  --gold: oklch(0.82 0.12 85);
+  --royal: oklch(0.55 0.14 45);
+  --gradient-hero: linear-gradient(135deg, oklch(0.98 0.015 45) 0%, oklch(0.96 0.03 85) 50%, oklch(0.95 0.04 45) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.55 0.14 45), oklch(0.68 0.12 60));
+  --shadow-soft: 0 10px 40px -10px oklch(0.55 0.14 45 / 0.18);
+  --shadow-card: 0 20px 50px -20px oklch(0.55 0.14 45 / 0.25);
+  --shadow-float: 0 30px 60px -25px oklch(0.55 0.14 45 / 0.35);
+  
+  --admin-bg: oklch(0.98 0.015 45);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.3 0.08 45);
+  --admin-border: oklch(0.94 0.03 45);
+  --admin-accent: oklch(0.55 0.14 45);
+  --admin-gradient: linear-gradient(135deg, oklch(0.55 0.14 45), oklch(0.68 0.12 60));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.97 0.02 45), oklch(0.97 0.03 85 / 0.3));
+}
+
+/* 3. Lavender Dream (حلم الخزامى 💜) */
+html[data-theme="lavender_dream"] {
+  --background: oklch(0.99 0.012 290);
+  --foreground: oklch(0.3 0.08 290);
+  --card: oklch(0.99 0.006 290);
+  --card-foreground: oklch(0.3 0.08 290);
+  --border: oklch(0.94 0.03 290);
+  --primary: oklch(0.58 0.15 290);
+  --primary-foreground: oklch(0.99 0.005 290);
+  --secondary: oklch(0.95 0.03 290);
+  --secondary-foreground: oklch(0.4 0.08 290);
+  --pink: oklch(0.88 0.06 320);
+  --sky: oklch(0.88 0.06 200);
+  --gold: oklch(0.85 0.09 85);
+  --royal: oklch(0.58 0.15 290);
+  --gradient-hero: linear-gradient(135deg, oklch(0.99 0.012 290) 0%, oklch(0.96 0.03 200) 50%, oklch(0.98 0.02 320) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.58 0.15 290), oklch(0.68 0.12 320));
+  --shadow-soft: 0 10px 40px -10px oklch(0.58 0.15 290 / 0.18);
+  --shadow-card: 0 20px 50px -20px oklch(0.58 0.15 290 / 0.25);
+  --shadow-float: 0 30px 60px -25px oklch(0.58 0.15 290 / 0.35);
+  
+  --admin-bg: oklch(0.99 0.012 290);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.3 0.08 290);
+  --admin-border: oklch(0.95 0.03 290);
+  --admin-accent: oklch(0.58 0.15 290);
+  --admin-gradient: linear-gradient(135deg, oklch(0.58 0.15 290), oklch(0.68 0.12 320));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.98 0.015 290), oklch(0.98 0.02 200 / 0.3));
+}
+
+/* 4. Vintage Journal (أوراق وكتب دافئة 📚) */
+html[data-theme="vintage_journal"] {
+  --background: oklch(0.98 0.02 80);
+  --foreground: oklch(0.25 0.03 120);
+  --card: oklch(0.99 0.01 80);
+  --card-foreground: oklch(0.25 0.03 120);
+  --border: oklch(0.91 0.03 80);
+  --primary: oklch(0.38 0.08 135);
+  --primary-foreground: oklch(0.99 0.005 80);
+  --secondary: oklch(0.93 0.04 80);
+  --secondary-foreground: oklch(0.35 0.05 120);
+  --gold: oklch(0.76 0.11 80);
+  --pink: oklch(0.85 0.04 45);
+  --sky: oklch(0.88 0.04 180);
+  --royal: oklch(0.38 0.08 135);
+  --gradient-hero: linear-gradient(135deg, oklch(0.98 0.02 80) 0%, oklch(0.95 0.03 80) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.38 0.08 135), oklch(0.48 0.06 120));
+  --shadow-soft: 0 10px 40px -10px oklch(0.38 0.08 135 / 0.12);
+  --shadow-card: 0 20px 50px -20px oklch(0.38 0.08 135 / 0.18);
+  --shadow-float: 0 30px 60px -25px oklch(0.38 0.08 135 / 0.22);
+  
+  --admin-bg: oklch(0.98 0.02 80);
+  --admin-card: oklch(0.99 0.01 80);
+  --admin-fg: oklch(0.25 0.03 120);
+  --admin-border: oklch(0.92 0.02 80);
+  --admin-accent: oklch(0.38 0.08 135);
+  --admin-gradient: linear-gradient(135deg, oklch(0.38 0.08 135), oklch(0.48 0.06 120));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.96 0.02 80), oklch(0.95 0.03 80 / 0.5));
+}
+
+/* 5. Blossom Pink (رقة الورد 🌹) */
+html[data-theme="blossom_pink"] {
+  --background: oklch(0.99 0.015 15);
+  --foreground: oklch(0.32 0.08 15);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.32 0.08 15);
+  --border: oklch(0.95 0.02 15);
+  --primary: oklch(0.78 0.12 15);
+  --primary-foreground: oklch(0.99 0.005 15);
+  --secondary: oklch(0.96 0.03 15);
+  --secondary-foreground: oklch(0.45 0.07 15);
+  --pink: oklch(0.82 0.1 15);
+  --sky: oklch(0.9 0.04 220);
+  --gold: oklch(0.85 0.07 75);
+  --royal: oklch(0.78 0.12 15);
+  --gradient-hero: linear-gradient(135deg, oklch(0.99 0.015 15) 0%, oklch(0.97 0.03 35) 50%, oklch(0.99 0.01 15) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.78 0.12 15), oklch(0.85 0.08 25));
+  --shadow-soft: 0 10px 40px -10px oklch(0.78 0.12 15 / 0.15);
+  --shadow-card: 0 20px 50px -20px oklch(0.78 0.12 15 / 0.22);
+  --shadow-float: 0 30px 60px -25px oklch(0.78 0.12 15 / 0.3);
+  
+  --admin-bg: oklch(0.99 0.012 15);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.35 0.06 15);
+  --admin-border: oklch(0.96 0.02 15);
+  --admin-accent: oklch(0.78 0.12 15);
+  --admin-gradient: linear-gradient(135deg, oklch(0.78 0.12 15), oklch(0.85 0.08 25));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.98 0.015 15), oklch(0.98 0.02 35 / 0.3));
+}
+
+/* 6. Candy Pop (حلوى الكرز 🍒) */
+html[data-theme="candy_pop"] {
+  --background: oklch(0.99 0.01 350);
+  --foreground: oklch(0.25 0.1 350);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.1 350);
+  --border: oklch(0.94 0.04 350);
+  --primary: oklch(0.68 0.22 350);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.05 350);
+  --secondary-foreground: oklch(0.35 0.15 350);
+  --pink: oklch(0.75 0.18 350);
+  --sky: oklch(0.8 0.12 210);
+  --gold: oklch(0.85 0.15 80);
+  --royal: oklch(0.68 0.22 350);
+  --gradient-hero: linear-gradient(135deg, oklch(0.99 0.01 350) 0%, oklch(0.95 0.06 350) 50%, oklch(0.92 0.08 210 / 0.2) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.68 0.22 350), oklch(0.62 0.24 15));
+  --shadow-soft: 0 10px 40px -10px oklch(0.68 0.22 350 / 0.18);
+  --shadow-card: 0 20px 50px -20px oklch(0.68 0.22 350 / 0.25);
+  --shadow-float: 0 30px 60px -25px oklch(0.68 0.22 350 / 0.35);
+  
+  --admin-bg: oklch(0.99 0.01 350);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.3 0.08 350);
+  --admin-border: oklch(0.96 0.03 350);
+  --admin-accent: oklch(0.68 0.22 350);
+  --admin-gradient: linear-gradient(135deg, oklch(0.68 0.22 350), oklch(0.62 0.24 15));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.98 0.01 350), oklch(0.96 0.03 210 / 0.2));
+}
+
+/* 7. Minimal Chic (البساطة الراقية 🕊️) */
+html[data-theme="minimal_chic"] {
+  --background: oklch(0.99 0.005 90);
+  --foreground: oklch(0.2 0.02 90);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 90);
+  --border: oklch(0.95 0.01 90);
+  --primary: oklch(0.35 0.04 90);
+  --primary-foreground: oklch(0.99 0.002 90);
+  --secondary: oklch(0.95 0.01 90);
+  --secondary-foreground: oklch(0.4 0.02 90);
+  --pink: oklch(0.92 0.02 15);
+  --sky: oklch(0.92 0.02 220);
+  --gold: oklch(0.88 0.03 85);
+  --royal: oklch(0.35 0.04 90);
+  --gradient-hero: linear-gradient(135deg, oklch(0.99 0.005 90) 0%, oklch(0.97 0.008 90) 100%);
+  --gradient-royal: linear-gradient(135deg, oklch(0.35 0.04 90), oklch(0.45 0.03 90));
+  --shadow-soft: 0 10px 40px -10px oklch(0.35 0.04 90 / 0.08);
+  --shadow-card: 0 20px 50px -20px oklch(0.35 0.04 90 / 0.12);
+  --shadow-float: 0 30px 60px -25px oklch(0.35 0.04 90 / 0.15);
+  
+  --admin-bg: oklch(0.99 0.005 90);
+  --admin-card: oklch(1 0 0);
+  --admin-fg: oklch(0.2 0.02 90);
+  --admin-border: oklch(0.95 0.01 90);
+  --admin-accent: oklch(0.35 0.04 90);
+  --admin-gradient: linear-gradient(135deg, oklch(0.35 0.04 90), oklch(0.45 0.03 90));
+  --admin-gradient-soft: linear-gradient(135deg, oklch(0.98 0.005 90), oklch(0.97 0.008 90));
 }

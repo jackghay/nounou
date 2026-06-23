@@ -52,6 +52,13 @@ export interface SiteSettingsDto {
   heroSubtitle: string | null;
   metaTitle: string | null;
   metaDescription: string | null;
+  theme: string | null;
+  fontFamily: string | null;
+  cardStyle: string | null;
+  bgSparkles: string | null;
+  primaryColor: string | null;
+  secondaryColor: string | null;
+  backgroundColor: string | null;
   createdAt: string;
   updatedAt: string;
 }

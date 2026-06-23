@@ -19,7 +19,8 @@ async function readJson(response: Response): Promise<unknown> {
 }
 
 async function requestItems<T>(url: string): Promise<T[]> {
-  const response = await fetch(url, {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+  const response = await fetch(`${API_BASE_URL}${url}`, {
     method: "GET",
     headers: { Accept: "application/json" },
   });
@@ -37,7 +38,8 @@ async function requestItems<T>(url: string): Promise<T[]> {
 }
 
 async function requestData<T>(url: string): Promise<T> {
-  const response = await fetch(url, {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+  const response = await fetch(`${API_BASE_URL}${url}`, {
     method: "GET",
     headers: { Accept: "application/json" },
   });
@@ -74,4 +76,20 @@ export const publicApiClient = {
   getGallery: (params?: GalleryQueryParams) => requestItems<GalleryItemDto>(buildGalleryUrl(params)),
   getFeaturedGallery: () => requestItems<GalleryItemDto>("/api/gallery/featured"),
   getSettings: () => requestData<SiteSettingsDto>("/api/settings"),
+  postVisit: async (source: string): Promise<boolean> => {
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+      const response = await fetch(`${API_BASE_URL}/api/analytics/visit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ source }),
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  },
 };

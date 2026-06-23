@@ -11,6 +11,7 @@ import {
   deleteGalleryItem,
   isLoggedIn,
   logout,
+  fetchSettings,
 } from "@/lib/admin/api";
 import type { Category, GalleryItem } from "@/lib/admin/types";
 import { FirstTimeSetup } from "@/components/admin/FirstTimeSetup";
@@ -25,7 +26,7 @@ import {
 } from "@/components/admin/CollapsibleSections";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin/")({
+export const Route = createFileRoute("/dashboard-entry/")({
   component: AdminHome,
 });
 
@@ -48,9 +49,54 @@ function AdminHome() {
     if (!ok) return;
     (async () => {
       try {
-        const [cs, is] = await Promise.all([fetchCategories(), fetchGalleryItems()]);
+        const [cs, is, s] = await Promise.all([
+          fetchCategories(),
+          fetchGalleryItems(),
+          fetchSettings(),
+        ]);
         setCategories(cs);
         setItems(is);
+
+        // Apply visual customization on load
+        if (s) {
+          const theme = s.theme || "royal_gold";
+          document.documentElement.setAttribute("data-theme", theme);
+
+          const fontFamily = s.fontFamily || "Tajawal";
+          document.documentElement.style.setProperty(
+            "--font-family-override",
+            `'${fontFamily}', 'Cairo', system-ui, sans-serif`
+          );
+
+          const cardStyle = s.cardStyle || "medium";
+          let radius = "1.25rem";
+          if (cardStyle === "sharp") radius = "0px";
+          else if (cardStyle === "round") radius = "2.5rem";
+          document.documentElement.style.setProperty("--radius", radius);
+
+          // Apply custom colors if specified
+          if (s.primaryColor) {
+            document.documentElement.style.setProperty("--primary", s.primaryColor);
+            document.documentElement.style.setProperty("--admin-accent", s.primaryColor);
+          } else {
+            document.documentElement.style.removeProperty("--primary");
+            document.documentElement.style.removeProperty("--admin-accent");
+          }
+
+          if (s.secondaryColor) {
+            document.documentElement.style.setProperty("--secondary", s.secondaryColor);
+          } else {
+            document.documentElement.style.removeProperty("--secondary");
+          }
+
+          if (s.backgroundColor) {
+            document.documentElement.style.setProperty("--background", s.backgroundColor);
+            document.documentElement.style.setProperty("--admin-bg", s.backgroundColor);
+          } else {
+            document.documentElement.style.removeProperty("--background");
+            document.documentElement.style.removeProperty("--admin-bg");
+          }
+        }
       } catch {
         toast.error("انتهت الجلسة، يرجى تسجيل الدخول مجددًا");
         await logout();
@@ -61,13 +107,13 @@ function AdminHome() {
     })();
   }, []);
 
-  if (authChecked && !authed) return <Navigate to="/admin/login" />;
+  if (authChecked && !authed) return <Navigate to="/dashboard-entry/login" />;
 
   const showSetup = !setupDone && categories.length === 0;
 
   const onLogout = async () => {
     await logout();
-    navigate({ to: "/admin/login" });
+    navigate({ to: "/dashboard-entry/login" });
   };
 
   const onConfirmDelete = async () => {

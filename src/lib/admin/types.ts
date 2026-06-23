@@ -28,4 +28,11 @@ export type Settings = {
   heroSubtitle: string;
   metaTitle: string;
   metaDescription: string;
+  theme?: string;
+  fontFamily?: string;
+  cardStyle?: string;
+  bgSparkles?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  backgroundColor?: string;
 };

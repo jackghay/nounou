@@ -9,26 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AdminRouteImport } from './routes/admin'
+import { Route as DashboardEntryRouteImport } from './routes/dashboard-entry'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as ApiSettingsRouteImport } from './routes/api/settings'
-import { Route as ApiGalleryRouteImport } from './routes/api/gallery'
-import { Route as ApiCategoriesRouteImport } from './routes/api/categories'
-import { Route as AdminLoginRouteImport } from './routes/admin/login'
-import { Route as ApiGalleryFeaturedRouteImport } from './routes/api/gallery/featured'
-import { Route as ApiAdminUploadRouteImport } from './routes/api/admin/upload'
-import { Route as ApiAdminSettingsRouteImport } from './routes/api/admin/settings'
-import { Route as ApiAdminLogoutRouteImport } from './routes/api/admin/logout'
-import { Route as ApiAdminLoginRouteImport } from './routes/api/admin/login'
-import { Route as ApiAdminGalleryRouteImport } from './routes/api/admin/gallery'
-import { Route as ApiAdminCategoriesRouteImport } from './routes/api/admin/categories'
-import { Route as ApiAdminGalleryIdRouteImport } from './routes/api/admin/gallery/$id'
-import { Route as ApiAdminCategoriesIdRouteImport } from './routes/api/admin/categories/$id'
+import { Route as DashboardEntryIndexRouteImport } from './routes/dashboard-entry/index'
+import { Route as DashboardEntryLoginRouteImport } from './routes/dashboard-entry/login'
 
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const DashboardEntryRoute = DashboardEntryRouteImport.update({
+  id: '/dashboard-entry',
+  path: '/dashboard-entry',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -36,208 +24,64 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
+const DashboardEntryIndexRoute = DashboardEntryIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => DashboardEntryRoute,
 } as any)
-const ApiSettingsRoute = ApiSettingsRouteImport.update({
-  id: '/api/settings',
-  path: '/api/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiGalleryRoute = ApiGalleryRouteImport.update({
-  id: '/api/gallery',
-  path: '/api/gallery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiCategoriesRoute = ApiCategoriesRouteImport.update({
-  id: '/api/categories',
-  path: '/api/categories',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
+const DashboardEntryLoginRoute = DashboardEntryLoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => AdminRoute,
-} as any)
-const ApiGalleryFeaturedRoute = ApiGalleryFeaturedRouteImport.update({
-  id: '/featured',
-  path: '/featured',
-  getParentRoute: () => ApiGalleryRoute,
-} as any)
-const ApiAdminUploadRoute = ApiAdminUploadRouteImport.update({
-  id: '/api/admin/upload',
-  path: '/api/admin/upload',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminSettingsRoute = ApiAdminSettingsRouteImport.update({
-  id: '/api/admin/settings',
-  path: '/api/admin/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminLogoutRoute = ApiAdminLogoutRouteImport.update({
-  id: '/api/admin/logout',
-  path: '/api/admin/logout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminLoginRoute = ApiAdminLoginRouteImport.update({
-  id: '/api/admin/login',
-  path: '/api/admin/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminGalleryRoute = ApiAdminGalleryRouteImport.update({
-  id: '/api/admin/gallery',
-  path: '/api/admin/gallery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminCategoriesRoute = ApiAdminCategoriesRouteImport.update({
-  id: '/api/admin/categories',
-  path: '/api/admin/categories',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAdminGalleryIdRoute = ApiAdminGalleryIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ApiAdminGalleryRoute,
-} as any)
-const ApiAdminCategoriesIdRoute = ApiAdminCategoriesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ApiAdminCategoriesRoute,
+  getParentRoute: () => DashboardEntryRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/admin/login': typeof AdminLoginRoute
-  '/api/categories': typeof ApiCategoriesRoute
-  '/api/gallery': typeof ApiGalleryRouteWithChildren
-  '/api/settings': typeof ApiSettingsRoute
-  '/admin/': typeof AdminIndexRoute
-  '/api/admin/categories': typeof ApiAdminCategoriesRouteWithChildren
-  '/api/admin/gallery': typeof ApiAdminGalleryRouteWithChildren
-  '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/logout': typeof ApiAdminLogoutRoute
-  '/api/admin/settings': typeof ApiAdminSettingsRoute
-  '/api/admin/upload': typeof ApiAdminUploadRoute
-  '/api/gallery/featured': typeof ApiGalleryFeaturedRoute
-  '/api/admin/categories/$id': typeof ApiAdminCategoriesIdRoute
-  '/api/admin/gallery/$id': typeof ApiAdminGalleryIdRoute
+  '/dashboard-entry': typeof DashboardEntryRouteWithChildren
+  '/dashboard-entry/login': typeof DashboardEntryLoginRoute
+  '/dashboard-entry/': typeof DashboardEntryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/api/categories': typeof ApiCategoriesRoute
-  '/api/gallery': typeof ApiGalleryRouteWithChildren
-  '/api/settings': typeof ApiSettingsRoute
-  '/admin': typeof AdminIndexRoute
-  '/api/admin/categories': typeof ApiAdminCategoriesRouteWithChildren
-  '/api/admin/gallery': typeof ApiAdminGalleryRouteWithChildren
-  '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/logout': typeof ApiAdminLogoutRoute
-  '/api/admin/settings': typeof ApiAdminSettingsRoute
-  '/api/admin/upload': typeof ApiAdminUploadRoute
-  '/api/gallery/featured': typeof ApiGalleryFeaturedRoute
-  '/api/admin/categories/$id': typeof ApiAdminCategoriesIdRoute
-  '/api/admin/gallery/$id': typeof ApiAdminGalleryIdRoute
+  '/dashboard-entry/login': typeof DashboardEntryLoginRoute
+  '/dashboard-entry': typeof DashboardEntryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/admin/login': typeof AdminLoginRoute
-  '/api/categories': typeof ApiCategoriesRoute
-  '/api/gallery': typeof ApiGalleryRouteWithChildren
-  '/api/settings': typeof ApiSettingsRoute
-  '/admin/': typeof AdminIndexRoute
-  '/api/admin/categories': typeof ApiAdminCategoriesRouteWithChildren
-  '/api/admin/gallery': typeof ApiAdminGalleryRouteWithChildren
-  '/api/admin/login': typeof ApiAdminLoginRoute
-  '/api/admin/logout': typeof ApiAdminLogoutRoute
-  '/api/admin/settings': typeof ApiAdminSettingsRoute
-  '/api/admin/upload': typeof ApiAdminUploadRoute
-  '/api/gallery/featured': typeof ApiGalleryFeaturedRoute
-  '/api/admin/categories/$id': typeof ApiAdminCategoriesIdRoute
-  '/api/admin/gallery/$id': typeof ApiAdminGalleryIdRoute
+  '/dashboard-entry': typeof DashboardEntryRouteWithChildren
+  '/dashboard-entry/login': typeof DashboardEntryLoginRoute
+  '/dashboard-entry/': typeof DashboardEntryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
-    | '/admin/login'
-    | '/api/categories'
-    | '/api/gallery'
-    | '/api/settings'
-    | '/admin/'
-    | '/api/admin/categories'
-    | '/api/admin/gallery'
-    | '/api/admin/login'
-    | '/api/admin/logout'
-    | '/api/admin/settings'
-    | '/api/admin/upload'
-    | '/api/gallery/featured'
-    | '/api/admin/categories/$id'
-    | '/api/admin/gallery/$id'
+    | '/dashboard-entry'
+    | '/dashboard-entry/login'
+    | '/dashboard-entry/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/admin/login'
-    | '/api/categories'
-    | '/api/gallery'
-    | '/api/settings'
-    | '/admin'
-    | '/api/admin/categories'
-    | '/api/admin/gallery'
-    | '/api/admin/login'
-    | '/api/admin/logout'
-    | '/api/admin/settings'
-    | '/api/admin/upload'
-    | '/api/gallery/featured'
-    | '/api/admin/categories/$id'
-    | '/api/admin/gallery/$id'
+  to: '/' | '/dashboard-entry/login' | '/dashboard-entry'
   id:
     | '__root__'
     | '/'
-    | '/admin'
-    | '/admin/login'
-    | '/api/categories'
-    | '/api/gallery'
-    | '/api/settings'
-    | '/admin/'
-    | '/api/admin/categories'
-    | '/api/admin/gallery'
-    | '/api/admin/login'
-    | '/api/admin/logout'
-    | '/api/admin/settings'
-    | '/api/admin/upload'
-    | '/api/gallery/featured'
-    | '/api/admin/categories/$id'
-    | '/api/admin/gallery/$id'
+    | '/dashboard-entry'
+    | '/dashboard-entry/login'
+    | '/dashboard-entry/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRouteWithChildren
-  ApiCategoriesRoute: typeof ApiCategoriesRoute
-  ApiGalleryRoute: typeof ApiGalleryRouteWithChildren
-  ApiSettingsRoute: typeof ApiSettingsRoute
-  ApiAdminCategoriesRoute: typeof ApiAdminCategoriesRouteWithChildren
-  ApiAdminGalleryRoute: typeof ApiAdminGalleryRouteWithChildren
-  ApiAdminLoginRoute: typeof ApiAdminLoginRoute
-  ApiAdminLogoutRoute: typeof ApiAdminLogoutRoute
-  ApiAdminSettingsRoute: typeof ApiAdminSettingsRoute
-  ApiAdminUploadRoute: typeof ApiAdminUploadRoute
+  DashboardEntryRoute: typeof DashboardEntryRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/dashboard-entry': {
+      id: '/dashboard-entry'
+      path: '/dashboard-entry'
+      fullPath: '/dashboard-entry'
+      preLoaderRoute: typeof DashboardEntryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -247,166 +91,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
+    '/dashboard-entry/': {
+      id: '/dashboard-entry/'
       path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
+      fullPath: '/dashboard-entry/'
+      preLoaderRoute: typeof DashboardEntryIndexRouteImport
+      parentRoute: typeof DashboardEntryRoute
     }
-    '/api/settings': {
-      id: '/api/settings'
-      path: '/api/settings'
-      fullPath: '/api/settings'
-      preLoaderRoute: typeof ApiSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/gallery': {
-      id: '/api/gallery'
-      path: '/api/gallery'
-      fullPath: '/api/gallery'
-      preLoaderRoute: typeof ApiGalleryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/categories': {
-      id: '/api/categories'
-      path: '/api/categories'
-      fullPath: '/api/categories'
-      preLoaderRoute: typeof ApiCategoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/login': {
-      id: '/admin/login'
+    '/dashboard-entry/login': {
+      id: '/dashboard-entry/login'
       path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/api/gallery/featured': {
-      id: '/api/gallery/featured'
-      path: '/featured'
-      fullPath: '/api/gallery/featured'
-      preLoaderRoute: typeof ApiGalleryFeaturedRouteImport
-      parentRoute: typeof ApiGalleryRoute
-    }
-    '/api/admin/upload': {
-      id: '/api/admin/upload'
-      path: '/api/admin/upload'
-      fullPath: '/api/admin/upload'
-      preLoaderRoute: typeof ApiAdminUploadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/settings': {
-      id: '/api/admin/settings'
-      path: '/api/admin/settings'
-      fullPath: '/api/admin/settings'
-      preLoaderRoute: typeof ApiAdminSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/logout': {
-      id: '/api/admin/logout'
-      path: '/api/admin/logout'
-      fullPath: '/api/admin/logout'
-      preLoaderRoute: typeof ApiAdminLogoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/login': {
-      id: '/api/admin/login'
-      path: '/api/admin/login'
-      fullPath: '/api/admin/login'
-      preLoaderRoute: typeof ApiAdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/gallery': {
-      id: '/api/admin/gallery'
-      path: '/api/admin/gallery'
-      fullPath: '/api/admin/gallery'
-      preLoaderRoute: typeof ApiAdminGalleryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/categories': {
-      id: '/api/admin/categories'
-      path: '/api/admin/categories'
-      fullPath: '/api/admin/categories'
-      preLoaderRoute: typeof ApiAdminCategoriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/admin/gallery/$id': {
-      id: '/api/admin/gallery/$id'
-      path: '/$id'
-      fullPath: '/api/admin/gallery/$id'
-      preLoaderRoute: typeof ApiAdminGalleryIdRouteImport
-      parentRoute: typeof ApiAdminGalleryRoute
-    }
-    '/api/admin/categories/$id': {
-      id: '/api/admin/categories/$id'
-      path: '/$id'
-      fullPath: '/api/admin/categories/$id'
-      preLoaderRoute: typeof ApiAdminCategoriesIdRouteImport
-      parentRoute: typeof ApiAdminCategoriesRoute
+      fullPath: '/dashboard-entry/login'
+      preLoaderRoute: typeof DashboardEntryLoginRouteImport
+      parentRoute: typeof DashboardEntryRoute
     }
   }
 }
 
-interface AdminRouteChildren {
-  AdminLoginRoute: typeof AdminLoginRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+interface DashboardEntryRouteChildren {
+  DashboardEntryLoginRoute: typeof DashboardEntryLoginRoute
+  DashboardEntryIndexRoute: typeof DashboardEntryIndexRoute
 }
 
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminLoginRoute: AdminLoginRoute,
-  AdminIndexRoute: AdminIndexRoute,
+const DashboardEntryRouteChildren: DashboardEntryRouteChildren = {
+  DashboardEntryLoginRoute: DashboardEntryLoginRoute,
+  DashboardEntryIndexRoute: DashboardEntryIndexRoute,
 }
 
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
-
-interface ApiGalleryRouteChildren {
-  ApiGalleryFeaturedRoute: typeof ApiGalleryFeaturedRoute
-}
-
-const ApiGalleryRouteChildren: ApiGalleryRouteChildren = {
-  ApiGalleryFeaturedRoute: ApiGalleryFeaturedRoute,
-}
-
-const ApiGalleryRouteWithChildren = ApiGalleryRoute._addFileChildren(
-  ApiGalleryRouteChildren,
-)
-
-interface ApiAdminCategoriesRouteChildren {
-  ApiAdminCategoriesIdRoute: typeof ApiAdminCategoriesIdRoute
-}
-
-const ApiAdminCategoriesRouteChildren: ApiAdminCategoriesRouteChildren = {
-  ApiAdminCategoriesIdRoute: ApiAdminCategoriesIdRoute,
-}
-
-const ApiAdminCategoriesRouteWithChildren =
-  ApiAdminCategoriesRoute._addFileChildren(ApiAdminCategoriesRouteChildren)
-
-interface ApiAdminGalleryRouteChildren {
-  ApiAdminGalleryIdRoute: typeof ApiAdminGalleryIdRoute
-}
-
-const ApiAdminGalleryRouteChildren: ApiAdminGalleryRouteChildren = {
-  ApiAdminGalleryIdRoute: ApiAdminGalleryIdRoute,
-}
-
-const ApiAdminGalleryRouteWithChildren = ApiAdminGalleryRoute._addFileChildren(
-  ApiAdminGalleryRouteChildren,
+const DashboardEntryRouteWithChildren = DashboardEntryRoute._addFileChildren(
+  DashboardEntryRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRouteWithChildren,
-  ApiCategoriesRoute: ApiCategoriesRoute,
-  ApiGalleryRoute: ApiGalleryRouteWithChildren,
-  ApiSettingsRoute: ApiSettingsRoute,
-  ApiAdminCategoriesRoute: ApiAdminCategoriesRouteWithChildren,
-  ApiAdminGalleryRoute: ApiAdminGalleryRouteWithChildren,
-  ApiAdminLoginRoute: ApiAdminLoginRoute,
-  ApiAdminLogoutRoute: ApiAdminLogoutRoute,
-  ApiAdminSettingsRoute: ApiAdminSettingsRoute,
-  ApiAdminUploadRoute: ApiAdminUploadRoute,
+  DashboardEntryRoute: DashboardEntryRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
