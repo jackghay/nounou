@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 async function runMigrations() {
-  console.log("Connecting to database...");
+  console.log("Connecting to database for migrations...");
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
   });
@@ -15,7 +15,9 @@ async function runMigrations() {
     await client.connect();
     console.log("Connected successfully.");
 
+    // Relative path to migrations is '../migrations' since both src/ and dist/ are siblings to migrations/
     const migrationsDir = path.join(__dirname, "../migrations");
+    console.log(`Reading migrations from: ${migrationsDir}`);
     const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith(".sql")).sort();
 
     for (const file of files) {

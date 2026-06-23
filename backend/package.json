@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
-    "migrate": "ts-node scripts/migrate.ts",
-    "seed:admin": "ts-node scripts/seedAdmin.ts"
+    "start": "node dist/migrate.js && node dist/seedAdmin.js && node dist/server.js",
+    "migrate": "ts-node src/migrate.ts",
+    "seed:admin": "ts-node src/seedAdmin.ts"
   },
   "keywords": [],
   "author": "",

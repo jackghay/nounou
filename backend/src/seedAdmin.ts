@@ -5,8 +5,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 async function seedAdmin() {
-  const email = process.env.ADMIN_EMAIL || "admin@example.com";
-  const password = process.env.ADMIN_PASSWORD || "Admin123456!";
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
+
+  if (!email || !password) {
+    console.error("ADMIN_EMAIL or ADMIN_PASSWORD environment variables are not set. Skipping auto-seeding.");
+    return;
+  }
 
   console.log(`Seeding admin user: ${email}`);
 
