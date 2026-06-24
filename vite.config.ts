@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { nitro } from "nitro/vite";
 import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
@@ -9,6 +10,7 @@ export default defineConfig({
     tsconfigPaths(),
     tailwindcss(),
     tanstackStart(),
+    nitro(),
   ],
   server: {
     proxy: {
