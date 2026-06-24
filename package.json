@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",
-    "build": "vinxi build",
-    "build:dev": "vinxi build --mode development",
+    "build": "vinxi build && node scripts/clean-build.js",
+    "build:dev": "vinxi build --mode development && node scripts/clean-build.js",
     "preview": "vinxi preview",
     "start": "vinxi start",
     "lint": "eslint .",
